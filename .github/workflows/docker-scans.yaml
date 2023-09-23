@@ -23,7 +23,7 @@ jobs:
       contents: read
       security-events: write
     uses: 0GiS0/scan-docker-vulnerabilities/.github/workflows/trivy.yaml@main
-  terrascan:
+  grype:
     permissions:
       contents: read
       security-events: write

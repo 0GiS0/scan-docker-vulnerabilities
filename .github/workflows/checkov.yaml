@@ -22,9 +22,7 @@ jobs:
       security-events: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Build the image
-        run: docker build -t ${{ env.IMAGE_NAME }} ${{ env.IMAGE_PATH }}
+      - uses: actions/checkout@v3    
       - name: Run Checkov action
         id: checkov
         uses: bridgecrewio/checkov-action@master
