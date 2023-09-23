@@ -25,6 +25,6 @@ jobs:
             grype docker:${{ parameters.IMAGE_NAME }} -o sarif > grype-results.sarif
       - task: PublishBuildArtifacts@1
         inputs:
-          PathtoPublish: "$(Build.ArtifactStagingDirectory)/grype-results.sarif"
+          PathtoPublish: "grype-results.sarif"
           ArtifactName: "CodeAnalysisLogs"
           publishLocation: "Container"
