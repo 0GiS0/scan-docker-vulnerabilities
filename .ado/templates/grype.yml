@@ -1,0 +1,31 @@
+parameters:
+  - name: IMAGE_NAME
+    default: apache
+  - name: DOCKERFILE_PATH
+    default: .
+
+jobs:
+  - job: Grype
+    steps:
+      - task: CmdLine@2
+        displayName: "Download and Install Grype"
+        inputs:
+          script: |
+            curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
+            grype -v
+      - task: CmdLine@2
+        displayName: "Build docker image"
+        inputs:
+          script: |
+            docker build -t ${{ parameters.IMAGE_NAME }} ${{ parameters.DOCKERFILE_PATH }}
+      - task: CmdLine@2
+        displayName: "Scan docker image with Grype"
+        inputs:
+          script: |
+            grype docker:${{ parameters.IMAGE_NAME }}
+            grype docker:${{ parameters.IMAGE_NAME }} -o sarif > grype-results.sarif
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: "$(Build.ArtifactStagingDirectory)/grype-results.sarif"
+          ArtifactName: "CodeAnalysisLogs"
+          publishLocation: "Container"

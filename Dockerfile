@@ -7,8 +7,6 @@ RUN apt-get update && apt-get install -y apache2 php7.0 php7.0-mysql libapache2-
 RUN a2enmod php7.0
 RUN a2enmod rewrite
 
-# Update the PHP.ini file, enable <? ?> tags and quieten logging.
-
 
 # Manually set up the apache environment variables
 ENV APACHE_RUN_USER www-data

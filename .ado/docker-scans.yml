@@ -1,0 +1,31 @@
+name: Docker scans
+
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    exclude:
+      - .github/**
+      - README.md
+
+pr:
+  branches:
+    include:
+      - main
+  paths:
+    exclude:
+      - .github/**
+      - README.md
+
+pool:
+  vmImage: ubuntu-latest
+
+jobs:
+  - template: "/.ado/templates/trivy.yml"
+  - template: "/.ado/templates/snyk.yml"
+    parameters:
+      SNYK_TOKEN: $(SNYK_TOKEN)
+  - template: "/.ado/templates/checkov.yml"
+  - template: "/.ado/templates/grype.yml"
+  

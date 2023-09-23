@@ -4,21 +4,29 @@ docker build -t apache .
 # Run the container
 docker run -p 8080:80 apache
 
-# Check vulnerabilities
-docker scout quickview
-docker scout cves apache:latest
-docker scout recommendations apache:latest
-
 # Trivy
 trivy image apache 
 
 # Snyk
 snyk auth
 snyk container test apache
-snyk container test apache --path=Dockerfile
 
 # Checkov
 checkov --framework=dockerfile -f Dockerfile
 
 # Grype
-grype apache
+grype docker:apache
+
+# Create Azure Container Registry
+RESOURCE_GROUP="scan-docker-vulnerabilities"
+LOCATION="westeurope"
+ACR="scandemo"
+
+# Create resource group
+az group create --name $RESOURCE_GROUP --location $LOCATION
+
+# Create ACR
+az acr create --resource-group $RESOURCE_GROUP --name $ACR --sku Basic
+
+# Build and push image to ACR
+az acr build --registry $ACR --image apache:latest .

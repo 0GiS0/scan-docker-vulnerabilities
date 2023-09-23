@@ -1,0 +1,24 @@
+parameters:
+  - name: DOCKERFILE_PATH
+    default: .
+
+jobs:
+  - job: Checkov
+    steps:
+      - task: Bash@3
+        displayName: "Install checkov"
+        inputs:
+          targetType: "inline"
+          script: "pip3 install checkov"
+      - task: Bash@3
+        displayName: "Checkov Static Code Analysis"
+        continueOnError: true
+        inputs:
+          targetType: "inline"
+          script: |
+            checkov --framework=dockerfile -f ${{ parameters.DOCKERFILE_PATH }} -o sarif -o cli
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: "results.sarif"
+          ArtifactName: "CodeAnalysisLogs"
+          publishLocation: "Container"
