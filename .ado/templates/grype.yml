@@ -11,8 +11,7 @@ jobs:
         displayName: "Download and Install Grype"
         inputs:
           script: |
-            curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
-            grype -v
+            curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin            
       - task: CmdLine@2
         displayName: "Build docker image"
         inputs:
