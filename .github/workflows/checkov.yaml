@@ -25,20 +25,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3    
-      - name: Run Checkov action
-        id: checkov
-        uses: bridgecrewio/checkov-action@master
-        with:
-          quiet: true # optional: display only failed checks
-          soft_fail: true # optional: do not return an error code if there are failed checks
-          log_level: DEBUG # optional: set log level. Default WARNING
-          docker_image: ${{ inputs.image_name }} # define the name of the image to scan
-          dockerfile_path: ${{ inputs.dockerfile_path }} # path to the Dockerfile
-          container_user: 1000 # optional: Define what UID and / or what GID to run the container under to prevent permission issues
-          output_format: cli,sarif
-          output_file_path: console,results.sarif
-          api-key: ${{ secrets.BC_API_KEY }} # Bridgecrew API key stored as a GitHub secret
-          
+      # - name: Run Checkov action
+      #   id: checkov
+      #   uses: bridgecrewio/checkov-action@master
+      #   with:
+      #     quiet: true # optional: display only failed checks
+      #     soft_fail: true # optional: do not return an error code if there are failed checks
+      #     log_level: DEBUG # optional: set log level. Default WARNING
+      #     docker_image: ${{ inputs.image_name }} # define the name of the image to scan
+      #     dockerfile_path: ${{ inputs.dockerfile_path }} # path to the Dockerfile
+      #     container_user: 1000 # optional: Define what UID and / or what GID to run the container under to prevent permission issues
+      #     output_format: cli,sarif
+      #     output_file_path: console,results.sarif
+      #     api-key: ${{ secrets.BC_API_KEY }} # Bridgecrew API key stored as a GitHub secret
+      - name: Install Checkov
+        run: |
+          pip install checkov
+      - name: Scan Dockerfile with checkov
+        run: |
+          checkov --framework=dockerfile -f Dockerfile -o sarif
+
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
         if: success() || failure()

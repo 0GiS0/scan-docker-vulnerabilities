@@ -12,7 +12,7 @@ snyk auth
 snyk container test apache
 
 # Checkov
-checkov --framework=dockerfile -f Dockerfile
+checkov --framework=dockerfile -f Dockerfile -o sarif
 
 # Grype
 grype docker:apache
