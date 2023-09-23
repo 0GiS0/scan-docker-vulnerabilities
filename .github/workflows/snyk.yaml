@@ -33,7 +33,7 @@ jobs:
       - name: Snyk IaC test and report
         continue-on-error: true       
         run: |
-          snyk container test ${{ inputs.image_name }} --sarif
+          snyk container test ${{ inputs.image_name }} --sarif || true
           snyk container test ${{ inputs.image_name }} --sarif  > snyk-docker.sarif
 
       # Push the Snyk Code results into GitHub Code Scanning tab
