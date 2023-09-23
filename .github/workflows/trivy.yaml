@@ -1,0 +1,43 @@
+name: Trivy Scan
+
+on:
+  workflow_call:
+    inputs:
+      image_name:
+        description: 'The name of the docker image to build'
+        type: string
+        required: false
+        default: 'apache'
+        
+      dockerfile_path:
+        description: 'The path of the Dockerfile'
+        type: string
+        required: false
+        default: './Dockerfile'
+
+jobs:
+  
+  scan:
+    permissions:
+      contents: read
+      security-events: write      
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build an image from Dockerfile
+        run: |
+          docker build -t ${{ inputs.image_name }} ${{ inputs.dockerfile_path }} .
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ inputs.image_name }}
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-results.sarif'

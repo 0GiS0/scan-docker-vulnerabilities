@@ -1,0 +1,40 @@
+name: Grype Scan
+
+on:
+  workflow_call:
+    inputs:
+      image_name:
+        description: 'The name of the docker image to build'
+        type: string
+        required: false
+        default: 'apache'
+        
+      dockerfile_path:
+        description: 'The path of the Dockerfile'
+        type: string
+        required: false
+        default: './Dockerfile'
+
+jobs:
+  
+  scan:
+    permissions:
+      contents: read
+      security-events: write      
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Build the Container image
+        run: docker build . --file ${{ inputs.dockerfile_path }} --tag ${{ inputs.image_name }}
+      - uses: anchore/scan-action@v3
+        id: scan
+        with:
+          image: ${{ inputs.image_name }}
+      - name: Inspect action SARIF report
+        run: cat ${{ steps.scan.outputs.sarif }}
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        if: success() || failure()
+        with:
+          sarif_file: ${{ steps.scan.outputs.sarif }}

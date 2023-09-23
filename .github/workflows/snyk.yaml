@@ -1,0 +1,44 @@
+name: Snyk Scan
+
+on:
+  workflow_call:
+    secrets:
+      SNYK_TOKEN:
+        required: true
+    inputs:
+      image_name:
+        description: 'The name of the docker image to build'
+        type: string
+        required: false
+        default: 'apache'
+        
+      dockerfile_path:
+        description: 'The path of the Dockerfile'
+        type: string
+        required: false
+        default: './Dockerfile'
+
+jobs:
+  snyk:
+    env:
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Snyk CLI to check for security issues
+        uses: snyk/actions/setup@806182742461562b67788a64410098c9d9b96adb
+              
+      - name: Build the Container image
+        run: docker build . --file ${{ inputs.dockerfile_path }} --tag ${{ inputs.image_name }}
+      - name: Snyk IaC test and report
+        continue-on-error: true       
+        run: |
+          snyk container test ${{ inputs.image_name }} --sarif
+          snyk container test ${{ inputs.image_name }} --sarif  > snyk-docker.sarif
+
+      # Push the Snyk Code results into GitHub Code Scanning tab
+      - name: Upload result to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v2
+        if: success() || failure()
+        with:
+          sarif_file: snyk-docker.sarif
