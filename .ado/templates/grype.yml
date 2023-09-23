@@ -21,7 +21,7 @@ jobs:
         displayName: "Scan docker image with Grype"
         inputs:
           script: |
-            grype docker:${{ parameters.IMAGE_NAME }}
+            grype docker:${{ parameters.IMAGE_NAME }} -o sarif 
             grype docker:${{ parameters.IMAGE_NAME }} -o sarif > grype-results.sarif
       - task: PublishBuildArtifacts@1
         inputs:
