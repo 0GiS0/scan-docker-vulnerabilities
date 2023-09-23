@@ -19,7 +19,7 @@ jobs:
       security-events: write
     uses: 0GiS0/scan-docker-vulnerabilities/.github/workflows/checkov.yaml@main
     secrets:
-      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      BC_API_KEY: ${{ secrets.BC_API_KEY }}      
   trivy:
     permissions:
       contents: read
@@ -36,4 +36,4 @@ jobs:
       security-events: write
     uses: 0GiS0/scan-docker-vulnerabilities/.github/workflows/snyk.yaml@main
     secrets:
-      BC_API_KEY: ${{ secrets.BC_API_KEY }}
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
