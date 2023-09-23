@@ -1,6 +1,6 @@
 parameters:
   - name: DOCKERFILE_PATH
-    default: .
+    default: ./Dockerfile
 
 jobs:
   - job: Checkov
