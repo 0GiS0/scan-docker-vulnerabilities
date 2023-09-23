@@ -35,7 +35,7 @@ jobs:
           container_user: 1000 # optional: Define what UID and / or what GID to run the container under to prevent permission issues
           output_format: cli,sarif
           output_file_path: console,results.sarif
-          # api-key: ${{ secrets.BC_API_KEY }} # Bridgecrew API key stored as a GitHub secret
+          api-key: ${{ secrets.BC_API_KEY }} # Bridgecrew API key stored as a GitHub secret
           
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
