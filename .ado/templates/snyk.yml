@@ -22,7 +22,7 @@ jobs:
           script: |
             docker build -t ${{ parameters.IMAGE_NAME }} ${{ parameters.DOCKERFILE_PATH }}
       - task: CmdLine@2
-        displayName: "Scan Terraform files"
+        displayName: "Scan Docker files"
         inputs:
           script: |
             snyk container test ${{ parameters.IMAGE_NAME }} --sarif
