@@ -30,42 +30,29 @@ pool:
   vmImage: ubuntu-latest
 
 jobs:
-  # - template: "/.ado/templates/trivy.yml"
-
-  - job: Trivy
-    steps:
-      - task: CmdLine@2
-        displayName: "Download and Install Trivy vulnerability scanner"
-        inputs:
-          script: |
-            sudo apt-get install rpm
-            wget https://github.com/aquasecurity/trivy/releases/download/v${{ parameters.trivyVersion }}/trivy_${{ parameters.trivyVersion }}_Linux-64bit.deb
-            sudo dpkg -i trivy_${{ parameters.trivyVersion }}_Linux-64bit.deb
-            trivy -v
-      - task: CmdLine@2
-        displayName: "Build docker image"
-        inputs:
-          script: |
-            docker build -t ${{ parameters.IMAGE_NAME }} ${{ parameters.DOCKERFILE_PATH }}
-      - task: CmdLine@2
-        displayName: "Trivy vulnerability scanner in docker mode"
-        inputs:
-          script: |
-            trivy image ${{ parameters.IMAGE_NAME }} --exit-code 0 --format sarif > $(Build.ArtifactStagingDirectory)/trivy-results.sarif
-      - task: PublishBuildArtifacts@1
-        inputs:
-          PathtoPublish: "$(Build.ArtifactStagingDirectory)/trivy-results.sarif"
-          ArtifactName: "CodeAnalysisLogs"
-          publishLocation: "Container"
-      - task: AdvancedSecurity-Publish@1
-        inputs:
-          SarifsInputDirectory: $(Build.ArtifactStagingDirectory)
-          Category: 'docker'
-          WaitForProcessing: true
-      
+  # - template: "/.ado/templates/trivy.yml"      
   # - template: "/.ado/templates/snyk.yml"
   #   parameters:
   #     SNYK_TOKEN: $(SNYK_TOKEN)
   # - template: "/.ado/templates/checkov.yml"
   # - template: "/.ado/templates/grype.yml"
-  
+  - job: Checkov
+    steps:
+      - task: Bash@3
+        displayName: "Install checkov"
+        inputs:
+          targetType: "inline"
+          script: "pip3 install checkov"
+      - task: Bash@3
+        displayName: "Checkov Static Code Analysis"
+        continueOnError: true
+        inputs:
+          targetType: "inline"
+          script: |
+            checkov --framework=dockerfile -f ${{ parameters.DOCKERFILE_PATH }} -o sarif -o cli
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: "results.sarif"
+          ArtifactName: "CodeAnalysisLogs"
+          publishLocation: "Container"
+      - task: AdvancedSecurity-Publish@1
