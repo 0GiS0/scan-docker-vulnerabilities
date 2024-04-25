@@ -59,7 +59,7 @@ jobs:
       #     publishLocation: "Container"
       - task: AdvancedSecurity-Publish@1
         inputs:
-          SarifsInputDirectory: '$(Build.ArtifactStagingDirectory)/trivy-results.sarif'
+          SarifsInputDirectory: $(Build.ArtifactStagingDirectory)
           Category: 'docker'
           WaitForProcessing: true
       
