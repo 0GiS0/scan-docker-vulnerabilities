@@ -18,43 +18,14 @@ pr:
       - .github/**
       - README.md
 
-parameters:
-  - name: trivyVersion
-    default: 0.50.4
-  - name: IMAGE_NAME
-    default: apache
-  - name: DOCKERFILE_PATH
-    default: .
-
 pool:
   vmImage: ubuntu-latest
 
 jobs:
-  # - template: "/.ado/templates/trivy.yml"      
-  # - template: "/.ado/templates/snyk.yml"
-  #   parameters:
-  #     SNYK_TOKEN: $(SNYK_TOKEN)
-  # - template: "/.ado/templates/checkov.yml"
-  # - template: "/.ado/templates/grype.yml"
-  - job: Checkov
-    steps:
-      - task: Bash@3
-        displayName: "Install checkov"
-        inputs:
-          targetType: "inline"
-          script: "pip3 install checkov"
-      - task: Bash@3
-        displayName: "Checkov Static Code Analysis"
-        continueOnError: true
-        inputs:
-          targetType: "inline"
-          script: |
-            checkov --framework=dockerfile -f ${{ parameters.DOCKERFILE_PATH }} -o sarif -o cli
-      - task: PublishBuildArtifacts@1
-        inputs:
-          PathtoPublish: "results.sarif"
-          ArtifactName: "CodeAnalysisLogs"
-          publishLocation: "Container"
-      - task: AdvancedSecurity-Publish@1
-        inputs:
-          SarifsInputDirectory: '.'
+  - template: "/.ado/templates/trivy.yml"
+  - template: "/.ado/templates/snyk.yml"
+    parameters:
+      SNYK_TOKEN: $(SNYK_TOKEN)
+  - template: "/.ado/templates/checkov.yml"
+  - template: "/.ado/templates/grype.yml"
+  
