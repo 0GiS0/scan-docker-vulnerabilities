@@ -29,3 +29,6 @@ jobs:
           PathtoPublish: "$(Build.ArtifactStagingDirectory)/grype-results.sarif"
           ArtifactName: "CodeAnalysisLogs"
           publishLocation: "Container"
+      - task: AdvancedSecurity-Publish@1
+        inputs:
+          SarifsInputDirectory: $(Build.ArtifactStagingDirectory)

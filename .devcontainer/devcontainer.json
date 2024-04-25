@@ -11,6 +11,13 @@
 		"ghcr.io/devcontainers-contrib/features/checkov:1": {},
 		"ghcr.io/devcontainers-contrib/features/grype:1": {},
 		"ghcr.io/dhoeric/features/trivy:1": {}		
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"MS-SarifVSCode.sarif-viewer"
+			]
+		}
 	}
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
