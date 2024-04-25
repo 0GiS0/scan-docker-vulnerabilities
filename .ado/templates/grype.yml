@@ -11,7 +11,8 @@ jobs:
         displayName: "Download and Install Grype"
         inputs:
           script: |
-            curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin            
+            curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
+            grype -v
       - task: CmdLine@2
         displayName: "Build docker image"
         inputs:
@@ -21,10 +22,13 @@ jobs:
         displayName: "Scan docker image with Grype"
         inputs:
           script: |
-            grype docker:${{ parameters.IMAGE_NAME }} -o sarif 
+            grype docker:${{ parameters.IMAGE_NAME }}
             grype docker:${{ parameters.IMAGE_NAME }} -o sarif > grype-results.sarif
       - task: PublishBuildArtifacts@1
         inputs:
-          PathtoPublish: "grype-results.sarif"
+          PathtoPublish: "$(Build.ArtifactStagingDirectory)/grype-results.sarif"
           ArtifactName: "CodeAnalysisLogs"
           publishLocation: "Container"
+      - task: AdvancedSecurity-Publish@1
+        inputs:
+          SarifsInputDirectory: $(Build.ArtifactStagingDirectory)
