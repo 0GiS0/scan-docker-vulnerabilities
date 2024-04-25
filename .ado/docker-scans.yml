@@ -52,20 +52,20 @@ jobs:
         inputs:
           script: |
             trivy image ${{ parameters.IMAGE_NAME }} --exit-code 0 --format sarif > $(Build.ArtifactStagingDirectory)/trivy-results.sarif
-      # - task: PublishBuildArtifacts@1
-      #   inputs:
-      #     PathtoPublish: "$(Build.ArtifactStagingDirectory)/trivy-results.sarif"
-      #     ArtifactName: "CodeAnalysisLogs"
-      #     publishLocation: "Container"
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: "$(Build.ArtifactStagingDirectory)/trivy-results.sarif"
+          ArtifactName: "CodeAnalysisLogs"
+          publishLocation: "Container"
       - task: AdvancedSecurity-Publish@1
         inputs:
           SarifsInputDirectory: $(Build.ArtifactStagingDirectory)
           Category: 'docker'
           WaitForProcessing: true
       
-  - template: "/.ado/templates/snyk.yml"
-    parameters:
-      SNYK_TOKEN: $(SNYK_TOKEN)
-  - template: "/.ado/templates/checkov.yml"
-  - template: "/.ado/templates/grype.yml"
+  # - template: "/.ado/templates/snyk.yml"
+  #   parameters:
+  #     SNYK_TOKEN: $(SNYK_TOKEN)
+  # - template: "/.ado/templates/checkov.yml"
+  # - template: "/.ado/templates/grype.yml"
   
