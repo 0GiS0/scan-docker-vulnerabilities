@@ -32,3 +32,6 @@ jobs:
           PathtoPublish: "$(Build.ArtifactStagingDirectory)/snyk-iac.sarif"
           ArtifactName: "CodeAnalysisLogs"
           publishLocation: "Container"
+      - task: AdvancedSecurity-Publish@1
+        inputs:
+          SarifsInputDirectory: $(Build.ArtifactStagingDirectory)
