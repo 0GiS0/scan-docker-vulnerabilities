@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Build the Container image
         run: docker build . --file ${{ inputs.dockerfile_path }} --tag ${{ inputs.image_name }}
       - uses: anchore/scan-action@v3
