@@ -1,6 +1,6 @@
 parameters:
   - name: DOCKERFILE_PATH
-    default: ./Dockerfile
+    default: .
 
 jobs:
   - job: Checkov
@@ -22,3 +22,6 @@ jobs:
           PathtoPublish: "results.sarif"
           ArtifactName: "CodeAnalysisLogs"
           publishLocation: "Container"
+      - task: AdvancedSecurity-Publish@1
+        inputs:
+          SarifsInputDirectory: .
