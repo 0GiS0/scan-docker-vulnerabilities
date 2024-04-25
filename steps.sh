@@ -6,6 +6,7 @@ docker run -p 8080:80 apache
 
 # Trivy
 trivy image apache 
+trivy image apache --exit-code 0 --format sarif > trivy-results.sarif
 
 # Snyk
 snyk auth

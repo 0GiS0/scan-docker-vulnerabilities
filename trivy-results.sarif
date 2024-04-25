@@ -1,0 +1,303 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "fullName": "Trivy Vulnerability Scanner",
+          "informationUri": "https://github.com/aquasecurity/trivy",
+          "name": "Trivy",
+          "rules": [
+            {
+              "id": "CVE-2009-5155",
+              "name": "OsPackageVulnerability",
+              "shortDescription": {
+                "text": "glibc: parse_reg_exp in posix/regcomp.c misparses alternatives leading to denial of service or trigger incorrect result"
+              },
+              "fullDescription": {
+                "text": "In the GNU C Library (aka glibc or libc6) before 2.28, parse_reg_exp in posix/regcomp.c misparses alternatives, which allows attackers to cause a denial of service (assertion failure and application exit) or trigger an incorrect result by attempting a regular-expression match."
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "helpUri": "https://avd.aquasec.com/nvd/cve-2009-5155",
+              "help": {
+                "text": "Vulnerability CVE-2009-5155\nSeverity: LOW\nPackage: multiarch-support\nFixed Version: 2.23-0ubuntu11.3\nLink: [CVE-2009-5155](https://avd.aquasec.com/nvd/cve-2009-5155)\nIn the GNU C Library (aka glibc or libc6) before 2.28, parse_reg_exp in posix/regcomp.c misparses alternatives, which allows attackers to cause a denial of service (assertion failure and application exit) or trigger an incorrect result by attempting a regular-expression match.",
+                "markdown": "**Vulnerability CVE-2009-5155**\n| Severity | Package | Fixed Version | Link |\n| --- | --- | --- | --- |\n|LOW|multiarch-support|2.23-0ubuntu11.3|[CVE-2009-5155](https://avd.aquasec.com/nvd/cve-2009-5155)|\n\nIn the GNU C Library (aka glibc or libc6) before 2.28, parse_reg_exp in posix/regcomp.c misparses alternatives, which allows attackers to cause a denial of service (assertion failure and application exit) or trigger an incorrect result by attempting a regular-expression match."
+              },
+              "properties": {
+                "precision": "very-high",
+                "security-severity": "2.0",
+                "tags": [
+                  "vulnerability",
+                  "security",
+                  "LOW"
+                ]
+              }
+            },
+            {
+              "id": "CVE-2020-6096",
+              "name": "OsPackageVulnerability",
+              "shortDescription": {
+                "text": "glibc: signed comparison vulnerability in the ARMv7 memcpy function"
+              },
+              "fullDescription": {
+                "text": "An exploitable signed comparison vulnerability exists in the ARMv7 memcpy() implementation of GNU glibc 2.30.9000. Calling memcpy() (on ARMv7 targets that utilize the GNU glibc implementation) with a negative value for the \u0026#39;num\u0026#39; parameter results in a signed comparison vulnerability. If an attacker underflows the \u0026#39;num\u0026#39; parameter to memcpy(), this vulnerability could lead to undefined behavior such as writing to out-of-bounds memory and potentially remote code execution. Furthermore, this memcpy() implementation allows for program execution to continue in scenarios where a segmentation fault or crash should have occurred. The dangers occur in that subsequent execution and iterations of this code will be executed with this corrupted data."
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "helpUri": "https://avd.aquasec.com/nvd/cve-2020-6096",
+              "help": {
+                "text": "Vulnerability CVE-2020-6096\nSeverity: LOW\nPackage: multiarch-support\nFixed Version: 2.23-0ubuntu11.3\nLink: [CVE-2020-6096](https://avd.aquasec.com/nvd/cve-2020-6096)\nAn exploitable signed comparison vulnerability exists in the ARMv7 memcpy() implementation of GNU glibc 2.30.9000. Calling memcpy() (on ARMv7 targets that utilize the GNU glibc implementation) with a negative value for the 'num' parameter results in a signed comparison vulnerability. If an attacker underflows the 'num' parameter to memcpy(), this vulnerability could lead to undefined behavior such as writing to out-of-bounds memory and potentially remote code execution. Furthermore, this memcpy() implementation allows for program execution to continue in scenarios where a segmentation fault or crash should have occurred. The dangers occur in that subsequent execution and iterations of this code will be executed with this corrupted data.",
+                "markdown": "**Vulnerability CVE-2020-6096**\n| Severity | Package | Fixed Version | Link |\n| --- | --- | --- | --- |\n|LOW|multiarch-support|2.23-0ubuntu11.3|[CVE-2020-6096](https://avd.aquasec.com/nvd/cve-2020-6096)|\n\nAn exploitable signed comparison vulnerability exists in the ARMv7 memcpy() implementation of GNU glibc 2.30.9000. Calling memcpy() (on ARMv7 targets that utilize the GNU glibc implementation) with a negative value for the 'num' parameter results in a signed comparison vulnerability. If an attacker underflows the 'num' parameter to memcpy(), this vulnerability could lead to undefined behavior such as writing to out-of-bounds memory and potentially remote code execution. Furthermore, this memcpy() implementation allows for program execution to continue in scenarios where a segmentation fault or crash should have occurred. The dangers occur in that subsequent execution and iterations of this code will be executed with this corrupted data."
+              },
+              "properties": {
+                "precision": "very-high",
+                "security-severity": "2.0",
+                "tags": [
+                  "vulnerability",
+                  "security",
+                  "LOW"
+                ]
+              }
+            },
+            {
+              "id": "private-key",
+              "name": "Secret",
+              "shortDescription": {
+                "text": "Asymmetric Private Key"
+              },
+              "fullDescription": {
+                "text": "-----BEGIN PRIVATE KEY-----*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************-----END PRIVATE KEY"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "helpUri": "https://github.com/aquasecurity/trivy/blob/main/pkg/fanal/secret/builtin-rules.go",
+              "help": {
+                "text": "Secret Asymmetric Private Key\nSeverity: HIGH\nMatch: -----BEGIN PRIVATE KEY-----*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************-----END PRIVATE KEY",
+                "markdown": "**Secret Asymmetric Private Key**\n| Severity | Match |\n| --- | --- |\n|HIGH|-----BEGIN PRIVATE KEY-----*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************-----END PRIVATE KEY|"
+              },
+              "properties": {
+                "precision": "very-high",
+                "security-severity": "8.0",
+                "tags": [
+                  "secret",
+                  "security",
+                  "HIGH"
+                ]
+              }
+            }
+          ],
+          "version": "0.50.4"
+        }
+      },
+      "results": [
+        {
+          "ruleId": "CVE-2009-5155",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "text": "Package: libc-bin\nInstalled Version: 2.23-0ubuntu11.2\nVulnerability CVE-2009-5155\nSeverity: LOW\nFixed Version: 2.23-0ubuntu11.3\nLink: [CVE-2009-5155](https://avd.aquasec.com/nvd/cve-2009-5155)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "library/apache",
+                  "uriBaseId": "ROOTPATH"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "message": {
+                "text": "library/apache: libc-bin@2.23-0ubuntu11.2"
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2020-6096",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "text": "Package: libc-bin\nInstalled Version: 2.23-0ubuntu11.2\nVulnerability CVE-2020-6096\nSeverity: LOW\nFixed Version: 2.23-0ubuntu11.3\nLink: [CVE-2020-6096](https://avd.aquasec.com/nvd/cve-2020-6096)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "library/apache",
+                  "uriBaseId": "ROOTPATH"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "message": {
+                "text": "library/apache: libc-bin@2.23-0ubuntu11.2"
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2009-5155",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "text": "Package: libc6\nInstalled Version: 2.23-0ubuntu11.2\nVulnerability CVE-2009-5155\nSeverity: LOW\nFixed Version: 2.23-0ubuntu11.3\nLink: [CVE-2009-5155](https://avd.aquasec.com/nvd/cve-2009-5155)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "library/apache",
+                  "uriBaseId": "ROOTPATH"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "message": {
+                "text": "library/apache: libc6@2.23-0ubuntu11.2"
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2020-6096",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "text": "Package: libc6\nInstalled Version: 2.23-0ubuntu11.2\nVulnerability CVE-2020-6096\nSeverity: LOW\nFixed Version: 2.23-0ubuntu11.3\nLink: [CVE-2020-6096](https://avd.aquasec.com/nvd/cve-2020-6096)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "library/apache",
+                  "uriBaseId": "ROOTPATH"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "message": {
+                "text": "library/apache: libc6@2.23-0ubuntu11.2"
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2009-5155",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "text": "Package: multiarch-support\nInstalled Version: 2.23-0ubuntu11.2\nVulnerability CVE-2009-5155\nSeverity: LOW\nFixed Version: 2.23-0ubuntu11.3\nLink: [CVE-2009-5155](https://avd.aquasec.com/nvd/cve-2009-5155)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "library/apache",
+                  "uriBaseId": "ROOTPATH"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "message": {
+                "text": "library/apache: multiarch-support@2.23-0ubuntu11.2"
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2020-6096",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "text": "Package: multiarch-support\nInstalled Version: 2.23-0ubuntu11.2\nVulnerability CVE-2020-6096\nSeverity: LOW\nFixed Version: 2.23-0ubuntu11.3\nLink: [CVE-2020-6096](https://avd.aquasec.com/nvd/cve-2020-6096)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "library/apache",
+                  "uriBaseId": "ROOTPATH"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "message": {
+                "text": "library/apache: multiarch-support@2.23-0ubuntu11.2"
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "private-key",
+          "ruleIndex": 2,
+          "level": "error",
+          "message": {
+            "text": "Artifact: /etc/ssl/private/ssl-cert-snakeoil.key\nType: \nSecret Asymmetric Private Key\nSeverity: HIGH\nMatch: -----BEGIN PRIVATE KEY-----*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************-----END PRIVATE KEY"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/etc/ssl/private/ssl-cert-snakeoil.key",
+                  "uriBaseId": "ROOTPATH"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "message": {
+                "text": "/etc/ssl/private/ssl-cert-snakeoil.key"
+              }
+            }
+          ]
+        }
+      ],
+      "columnKind": "utf16CodeUnits",
+      "originalUriBaseIds": {
+        "ROOTPATH": {
+          "uri": "file:///"
+        }
+      },
+      "properties": {
+        "imageName": "apache",
+        "repoDigests": [],
+        "repoTags": [
+          "apache:latest"
+        ]
+      }
+    }
+  ]
+}
