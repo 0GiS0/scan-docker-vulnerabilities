@@ -20,7 +20,7 @@ pr:
 
 parameters:
   - name: trivyVersion
-    default: 0.45.0
+    default: 0.50.4
   - name: IMAGE_NAME
     default: apache
   - name: DOCKERFILE_PATH
@@ -51,7 +51,7 @@ jobs:
         displayName: "Trivy vulnerability scanner in docker mode"
         inputs:
           script: |
-            trivy image ${{ parameters.IMAGE_NAME }} --exit-code 0 --format sarif . > $(Build.ArtifactStagingDirectory)/trivy-results.sarif
+            trivy image ${{ parameters.IMAGE_NAME }} --exit-code 0 --format sarif > $(Build.ArtifactStagingDirectory)/trivy-results.sarif
       # - task: PublishBuildArtifacts@1
       #   inputs:
       #     PathtoPublish: "$(Build.ArtifactStagingDirectory)/trivy-results.sarif"
