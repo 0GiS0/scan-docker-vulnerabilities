@@ -26,9 +26,12 @@ jobs:
         displayName: "Trivy vulnerability scanner in docker mode"
         inputs:
           script: |
-            trivy image ${{ parameters.IMAGE_NAME }} --exit-code 0 --format sarif > $(Build.ArtifactStagingDirectory)/trivy-results.sarif
+            trivy image ${{ parameters.IMAGE_NAME }} --exit-code 0 --format sarif ${{ parameters.working_directory }} > $(Build.ArtifactStagingDirectory)/trivy-results.sarif
       - task: PublishBuildArtifacts@1
         inputs:
           PathtoPublish: "$(Build.ArtifactStagingDirectory)/trivy-results.sarif"
           ArtifactName: "CodeAnalysisLogs"
           publishLocation: "Container"
+      - task: AdvancedSecurity-Publish@1
+        inputs:
+          SarifsInputDirectory: $(Build.ArtifactStagingDirectory)
