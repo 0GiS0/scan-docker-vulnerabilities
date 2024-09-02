@@ -12,7 +12,7 @@ on:
         description: 'The path of the Dockerfile'
         type: string
         required: false
-        default: './Dockerfile'
+        default: 'Dockerfile'
 
 jobs:
   scan:
@@ -27,7 +27,7 @@ jobs:
           pip install checkov
       - name: Scan Dockerfile with checkov
         run: |
-          checkov --framework=dockerfile -f Dockerfile -o sarif
+          checkov --framework=dockerfile -f ${{ inputs.dockerfile_path }} -o sarif
 
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v3
