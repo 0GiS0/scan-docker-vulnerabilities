@@ -32,9 +32,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Build the Container image
+
+      - uses: anchore/scan-action@v5
         run: docker build ${{ inputs.context }} --file ${{ inputs.dockerfile_path }} --tag ${{ inputs.image_name }}
-      
-      - uses: anchore/scan-action@v4
         continue-on-error: true
         id: scan
         with:
