@@ -18,6 +18,12 @@ on:
         required: false
         default: './Dockerfile'
 
+      context:
+        description: 'The path of the directory that we are going to use as a context to build the image'
+        type: string
+        required: false
+        default: '.'     
+
 jobs:
   snyk:
     env:
@@ -26,10 +32,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Set up Snyk CLI to check for security issues
-        uses: snyk/actions/setup@640e31719aac3e44867d239dc86c20c3e34c8e4f
+        uses: snyk/actions/setup@cdb760004ba9ea4d525f2e043745dfe85bb9077e
               
       - name: Build the Container image
-        run: docker build . --file ${{ inputs.dockerfile_path }} --tag ${{ inputs.image_name }}
+        run: docker build ${{ inputs.context }} --file ${{ inputs.dockerfile_path }} --tag ${{ inputs.image_name }}
       - name: Snyk IaC test and report
         continue-on-error: true       
         run: |

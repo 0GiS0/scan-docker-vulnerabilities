@@ -15,6 +15,12 @@ on:
         required: false
         default: './Dockerfile'
 
+      context:
+        description: 'The path of the directory that we are going to use as a context to build the image'
+        type: string
+        required: false
+        default: '.'     
+
 jobs:
   
   scan:
@@ -26,15 +32,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Build the Container image
-        run: docker build . --file ${{ inputs.dockerfile_path }} --tag ${{ inputs.image_name }}
+
       - uses: anchore/scan-action@v5
+        run: docker build ${{ inputs.context }} --file ${{ inputs.dockerfile_path }} --tag ${{ inputs.image_name }}
         continue-on-error: true
         id: scan
         with:
           image: ${{ inputs.image_name }}
+      
       - name: Inspect action SARIF report
         run: cat ${{ steps.scan.outputs.sarif }}
-      - name: Upload Trivy scan results to GitHub Security tab
+      
+      - name: Upload Grype scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v3
         if: success() || failure()
         with:
