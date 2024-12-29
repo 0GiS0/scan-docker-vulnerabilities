@@ -31,20 +31,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Snyk CLI to check for security issues
-        uses: snyk/actions/docker@master
-              
+                  
       - name: Build the Container image
         run: docker build ${{ inputs.context }} --file ${{ inputs.dockerfile_path }} --tag ${{ inputs.image_name }}
-      - name: Snyk IaC test and report
-        continue-on-error: true       
-        run: |
-          snyk container test ${{ inputs.image_name }} --sarif || true
-          snyk container test ${{ inputs.image_name }} --sarif  > snyk-docker.sarif
+
+      - name: Run Snyk to check Docker image for vulnerabilities
+        uses: snyk/actions/docker@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: ${{ inputs.image_name }}
+          args: --file=${{ inputs.dockerfile_path }}
 
       # Push the Snyk Code results into GitHub Code Scanning tab
       - name: Upload result to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v3
         if: success() || failure()
         with:
-          sarif_file: snyk-docker.sarif
+          sarif_file: snyk.sarif
