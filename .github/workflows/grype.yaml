@@ -35,7 +35,7 @@ jobs:
       - name: Build the Container image      
         run: docker build ${{ inputs.context }} --file ${{ inputs.dockerfile_path }} --tag ${{ inputs.image_name }}
       
-      - uses: anchore/scan-action@v6
+      - uses: anchore/scan-action@v7
         continue-on-error: true
         id: scan
         with:
