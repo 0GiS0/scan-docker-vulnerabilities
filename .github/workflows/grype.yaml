@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         
       - name: Build the Container image      
         run: docker build ${{ inputs.context }} --file ${{ inputs.dockerfile_path }} --tag ${{ inputs.image_name }}
